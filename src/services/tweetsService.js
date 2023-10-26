@@ -5,9 +5,9 @@ const {
     createTweetQuery
 } = require("../queries/tweetsQuery");
 
-const findTweetsService = async (tweet) => {
+const findTweetsService = async () => {
     try {
-        const res = await findTweetsQuery(tweet);
+        const res = await findTweetsQuery();
 
         return res;
     } catch (err) {

@@ -11,19 +11,11 @@ const tweets = db.tweets;
 const {Op} = require("sequelize");
 const { sequelize } = require("../models");
 
-const findUsersQuery = async ({username = null, email = null, phone_number = null}) => {
+const findTweetsQuery = async () => {
     try {
-        console.log(username, email, phone_number)
         const params = {};
-        if (email) params.email = email;
-        if (username) params.username = username;
-        if (phone_number) params.phone_number = phone_number;
 
-        const res = await users.findAll({
-            where: {
-                ...params,
-            },
-        });
+        const res = await tweets.findAll();
         console.log(res)
         return res;
     } catch (err) {
@@ -55,7 +47,7 @@ const createTweetQuery = async ( userId, tweet) => {
 const updateTweetQuery = async (id, tweet) => {
     try {
         await db.sequelize.transaction(async (t) => {
-            await branch.update({
+            await tweets.update({
                 tweet
             }, {
                     where: {
@@ -72,7 +64,7 @@ const updateTweetQuery = async (id, tweet) => {
 
 
 module.exports = {
-    // findTweetsQuery,
+    findTweetsQuery,
     // updateBioQuery, 
     updateTweetQuery, 
     createTweetQuery

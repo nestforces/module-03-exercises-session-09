@@ -51,23 +51,7 @@ const findUsersQuery = async ({username = null, email = null, phone_number = nul
     }
 };
 
-const findBranchQuery = async ({ id = null, branchName = null }) => {
-    try {
-        const params = {};
-        if (id) params.id = id;
-        if (branchName) params.branchName = branchName;
 
-        const res = await branch.findOne({
-            where: {
-                ...params,
-            },
-        });
-
-        return res;
-    } catch (err) {
-        throw err;
-    }
-};
 
 const createUsersQuery = async ( email, username, phone_number, password, bio = " ") => {
     const t = await db.sequelize.transaction();
@@ -88,30 +72,13 @@ const createUsersQuery = async ( email, username, phone_number, password, bio = 
 };
 
 
-const createTweetQuery = async ( userId, tweet) => {
-    const t = await db.sequelize.transaction();
 
-
-    try {
-        console.log(userId)
-        const res = await tweets.create({
-             userId, tweet
-        },
-        { transaction: t});
-
-        await t.commit();
-        return res;
-    } catch (err) {
-        await t.rollback();
-        throw err;
-    }
-};
 
 
 const updateBioQuery = async (id, bio) => {
     try {
         await db.sequelize.transaction(async (t) => {
-            await branch.update({
+            await users.update({
                 bio
             }, {
                     where: {

@@ -22,7 +22,6 @@ const loginUsersService = async (username, email, phone_number, password) => {
 const createUsersService = async (email, username, phone_number, password, bio) => {
     try {
         const check = await findUsersQuery({ email, username, phone_number });
-        
 
         if (check.length > 0) throw new Error("email or username or phone number already exist");
 
